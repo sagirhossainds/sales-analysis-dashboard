@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Sale</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <span class="navbar-brand">Add Sale</span>
+    <div class="d-flex gap-2">
+      <a class="btn btn-secondary btn-sm" href="/">Back</a>
+      <a class="btn btn-warning btn-sm" href="/logout">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  {% if msg %}
+    <div class="alert alert-success">{{ msg }}</div>
+  {% endif %}
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <form method="post" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Customer</label>
+          <select class="form-select" name="customer_id" required>
+            {% for c in customers %}
+              <option value="{{ c.customer_id }}">{{ c.customer_name }} ({{ c.city }})</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Product</label>
+          <select class="form-select" name="product_id" required>
+            {% for p in products %}
+              <option value="{{ p.product_id }}">{{ p.product_name }} - ₹{{ p.price }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Quantity</label>
+          <input class="form-control" type="number" name="quantity" min="1" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Sale Date</label>
+          <input class="form-control" type="date" name="sale_date" required>
+        </div>
+
+        <div class="col-12">
+          <button class="btn btn-success">Save Sale</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

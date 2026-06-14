@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sales Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-4">
+  <h2 class="mb-4">Sales Analysis Dashboard</h2>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th>Product</th>
+            <th>Total Quantity</th>
+            <th>Total Sales</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data %}
+          <tr>
+            <td>{{ row.product_name }}</td>
+            <td>{{ row.total_quantity }}</td>
+            <td>₹ {{ row.total_sales }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table><hr class="my-4">
+
+<h4>Revenue by Product</h4>
+<canvas id="salesChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labels = [{% for row in data %}"{{ row.product_name }}",{% endfor %}];
+  const values = [{% for row in data %}{{ row.total_sales }},{% endfor %}];
+
+  new Chart(document.getElementById('salesChart'), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Total Sales',
+        data: values
+      }]
+    }
+  });
+</script>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
